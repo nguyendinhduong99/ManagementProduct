@@ -4,5 +4,18 @@
         <name>ProductManagementAPI</name>
     </assembly>
     <members>
+        <member name="M:ParkyAPI.Controllers.ProductTypesController.GetProductTypes">
+            <summary>
+            Get all list producttype
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ParkyAPI.Controllers.ProductTypesController.GetProductTypeById(System.Int32)">
+            <summary>
+            Get product type by id
+            </summary>
+            <param name="id">The id of product type</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

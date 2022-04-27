@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ParkyAPI.Models;
 using PM.Data.Data;
 using PM.Data.Models;
 using PM.Repository.Repository.IRepository;

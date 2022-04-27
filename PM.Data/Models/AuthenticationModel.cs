@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParkyAPI.Models
+namespace PM.Data.Models
 {
     public class AuthenticationModel
     {

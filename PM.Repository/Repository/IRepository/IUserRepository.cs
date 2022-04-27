@@ -1,5 +1,4 @@
-﻿using ParkyAPI.Models;
-using PM.Data.Models;
+﻿using PM.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
