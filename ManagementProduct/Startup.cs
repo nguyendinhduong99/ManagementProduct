@@ -1,28 +1,28 @@
-using ManagementProductAPI.Data;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using PM.Data.Data;
+using PM.Repository.Repository;
+using PM.Repository.Repository.IRepository;
+using PM.Service.Mapper;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text;
 
-namespace ManagementProduct
+namespace ProductManagementAPI
 {
     public class Startup
     {
-        public string ConnectionString { get; set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            ConnectionString = Configuration.GetConnectionString("DefautConnectionString");
         }
 
         public IConfiguration Configuration { get; }
@@ -33,11 +33,51 @@ namespace ManagementProduct
 
             services.AddControllers();
             //Configure DBContext  with SQL 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
 
-            services.AddSwaggerGen(c =>
+            services.AddDbContext<AppDbContext>(opts =>
+               opts.UseSqlServer(Configuration.GetConnectionString("DefautConnectionString"), b => b.MigrationsAssembly("ProductManagementAPI")));
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            //auto mapping
+            services.AddAutoMapper(typeof(ProductManagementMapping));
+
+            //Add đường lối: Swagger -> API -> View Models -> DB
+
+
+            services.AddApiVersioning(option =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ManagementProduct", Version = "v1" });
+                option.AssumeDefaultVersionWhenUnspecified = true;
+                option.DefaultApiVersion = new ApiVersion(1, 0);
+                option.ReportApiVersions = true;
+            }
+            );
+            services.AddVersionedApiExplorer(option => option.GroupNameFormat = "'v'.VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen();
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.UTF8.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x => {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 

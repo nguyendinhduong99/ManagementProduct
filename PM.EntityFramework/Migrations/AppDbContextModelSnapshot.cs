@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PM.Data.Data;
 
-namespace ProductManagementAPI.Migrations
+namespace PM.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -80,7 +80,7 @@ namespace ProductManagementAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductTypes");
+                    b.ToTable("ProProductTypes");
                 });
 
             modelBuilder.Entity("PM.Data.Models.User", b =>
@@ -97,9 +97,6 @@ namespace ProductManagementAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
