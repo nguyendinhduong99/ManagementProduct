@@ -33,9 +33,8 @@ namespace ProductManagementAPI
 
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = "Tiêu đề ủy quyền jwt sử dụng lược đồ Bearer. \r\n\r\n" +
-                "Nhập 'Bearer' [space] rồi nhập mã thông báo của bạn vào phần nhập văn bản bên dưới.\r\n\r\n" +
-                "Ví dụ: 'Bearer' 'mã token'",
+                Description = "ASP.NET Core exercises in the Enrick course of FPT SOFTWARE. \r\n\r\n" +
+                "Nhập 'Bearer' [space] rồi nhập mã token.\r\n\r\n",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
