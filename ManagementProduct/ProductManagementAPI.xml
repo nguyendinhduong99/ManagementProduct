@@ -4,6 +4,19 @@
         <name>ProductManagementAPI</name>
     </assembly>
     <members>
+        <member name="M:ProductManagementAPI.Controllers.ProductTypesController.GetProductTypes(System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Get all list producttype
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ProductManagementAPI.Controllers.ProductTypesController.GetProductTypeById(System.Int32)">
+            <summary>
+            Get product type by id
+            </summary>
+            <param name="id">The id of product type</param>
+            <returns></returns>
+        </member>
         <member name="M:ParkyAPI.Controllers.ProductsController.GetProducts(System.String,System.String,System.Nullable{System.Int32})">
             <summary>
             Get all list products
@@ -15,19 +28,6 @@
             Get national product by id
             </summary>
             <param name="id">The id of product</param>
-            <returns></returns>
-        </member>
-        <member name="M:ParkyAPI.Controllers.ProductTypesController.GetProductTypes(System.String,System.String,System.Nullable{System.Int32})">
-            <summary>
-            Get all list producttype
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ParkyAPI.Controllers.ProductTypesController.GetProductTypeById(System.Int32)">
-            <summary>
-            Get product type by id
-            </summary>
-            <param name="id">The id of product type</param>
             <returns></returns>
         </member>
         <member name="M:ParkyAPI.Controllers.ProductV2sController.GetFirstProduct(System.String,System.String,System.Nullable{System.Int32})">

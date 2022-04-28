@@ -83,10 +83,10 @@ namespace ParkyAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(201, Type = typeof(ProductDto))]
+        [ProducesResponseType(201, Type = typeof(CreateProductDto))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult CreateProduct([FromBody] ProductDto productDto)
+        public IActionResult CreateProduct([FromBody] CreateProductDto productDto)
         {
             if (productDto == null)
             {

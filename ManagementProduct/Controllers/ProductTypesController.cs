@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParkyAPI.Controllers
+namespace ProductManagementAPI.Controllers
 {
 
     [Route("api/v{version:apiVersion}/producttypes/")]
@@ -37,7 +37,7 @@ namespace ParkyAPI.Controllers
 
         public IActionResult GetProductTypes(string sortBy, string searchString, int? pageNumber)
         {
-            var objList = _pt.GetProductTypes( sortBy,  searchString, pageNumber);
+            var objList = _pt.GetProductTypes(sortBy, searchString, pageNumber);
             //return Ok(objList);
 
             var objListDto = new List<ProductTypeDto>();
@@ -99,7 +99,7 @@ namespace ParkyAPI.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return CreatedAtRoute("GetProductTypeById", new { version = HttpContext.GetRequestedApiVersion().ToString() ,id = ptObj.Id }, ptObj);
+            return CreatedAtRoute("GetProductTypeById", new { version = HttpContext.GetRequestedApiVersion().ToString(), id = ptObj.Id }, ptObj);
         }
 
         [HttpPatch("{id}", Name = "UpdateProductType")]
