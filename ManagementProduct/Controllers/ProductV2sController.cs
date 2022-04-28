@@ -30,9 +30,9 @@ namespace ParkyAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ProductDto))]
-        public IActionResult GetFirstProduct()
+        public IActionResult GetFirstProduct(string sortBy, string searchString, int? pageNumber)
         {
-            var obj = _pro.GetProducts().FirstOrDefault();
+            var obj = _pro.GetProducts( sortBy,  searchString, pageNumber).FirstOrDefault();
             return Ok(_mapper.Map<ProductDto>(obj));
         }
         

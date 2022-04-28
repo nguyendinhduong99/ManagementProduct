@@ -16,6 +16,7 @@ namespace PM.Service.Mapper
             CreateMap<Product, CreateProductDto>().ReverseMap();
             CreateMap<ProductType, ProductTypeDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UpdateUserDto>().ReverseMap();
         }
 
     }

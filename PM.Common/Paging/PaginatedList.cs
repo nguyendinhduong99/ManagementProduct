@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProductManagementAPI.Paging
+namespace PM.Common.Paging
 {
     public class PaginatedList<T> : List<T>
     {

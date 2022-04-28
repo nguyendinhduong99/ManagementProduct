@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ParkyAPI.Controllers
 {
-    //[Route("api/[controller]")]
+
     [Route("api/v{version:apiVersion}/producttypes/")]
     [ApiController]
 
@@ -35,9 +35,9 @@ namespace ParkyAPI.Controllers
         [ProducesResponseType(200, Type = typeof(List<ProductTypeDto>))]
         [ProducesResponseType(400)]
 
-        public IActionResult GetProductTypes()
+        public IActionResult GetProductTypes(string sortBy, string searchString, int? pageNumber)
         {
-            var objList = _pt.GetProductTypes();
+            var objList = _pt.GetProductTypes( sortBy,  searchString, pageNumber);
             //return Ok(objList);
 
             var objListDto = new List<ProductTypeDto>();

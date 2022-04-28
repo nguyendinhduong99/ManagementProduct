@@ -35,7 +35,7 @@ namespace ParkyAPI.Controllers
         [ProducesResponseType(200, Type = typeof(List<ProductDto>))]
         [ProducesResponseType(400)]
         //[Authorize(Roles = "DEV")]
-        public IActionResult GeProducts()
+        public IActionResult GetProducts(string sortBy, string searchString, int? pageNumber)
         {
             _logger.LogWarning("THIS IS A CUSTOM MESSAGE");
             try
@@ -47,7 +47,7 @@ namespace ParkyAPI.Controllers
                 _logger.LogError(ex, ex.Message);
             }
 
-            var objList = _pro.GetProducts();
+            var objList = _pro.GetProducts( sortBy,  searchString, pageNumber);
             //return Ok(objList);
 
             var objListDto = new List<ProductDto>();

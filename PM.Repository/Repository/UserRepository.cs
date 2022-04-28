@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PM.Common.Paging;
 using PM.Data.Data;
 using PM.Data.Models;
+using PM.Data.Models.Dtos;
 using PM.Repository.Repository.IRepository;
 using System;
 using System.Collections.Generic;
@@ -50,6 +52,43 @@ namespace PM.Repository.Repository
             return user;
         }
 
+        public bool DeleteUser(User user)
+        {
+            _db.Users.Remove(user);
+            return Save();
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _db.Users.FirstOrDefault(n => n.Id == userId);
+        }
+
+        public ICollection<User> GetUsers(string sortBy, string searchString, int? pageNumber)
+        {
+            var allData = _db.Users.OrderBy(n => n.UserName).ToList();
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy)
+                {
+                    case "desc":
+                        allData = allData.OrderByDescending(n => n.UserName).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allData = allData.Where(n => n.UserName.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
+
+            //Paging
+            int pageSize = 5;
+            allData = PaginatedList<User>.Create(allData.AsQueryable(), pageNumber ?? 1, pageSize);
+            return allData;
+            
+        }
+
         public bool IsUniqueUser(string username)
         {
             var user = _db.Users.SingleOrDefault(n => n.UserName == username);
@@ -75,6 +114,35 @@ namespace PM.Repository.Repository
             _db.SaveChanges();
             account.Password = "";
             return account;
+        }
+
+        public bool Save()
+        {
+            return _db.SaveChanges() >= 0 ? true : false;
+        }
+
+        public bool UpdatePass(User user)
+        {
+            _db.Users.Update(user);
+            return Save();
+        }
+
+        public bool UpdateUser(User user)
+        {
+            _db.Users.Update(user);
+            return Save();
+        }
+
+        public bool UserExist(string username)
+        {
+            var result = _db.Users.Any(n => n.UserName.ToLower().Trim() == username.ToLower().Trim());
+            return result;
+        }
+
+        public bool UserExist(int id)
+        {
+            var result = _db.Users.Any(n => n.Id == id);
+            return result;
         }
     }
 }

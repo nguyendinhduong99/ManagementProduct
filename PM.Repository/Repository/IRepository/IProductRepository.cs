@@ -9,7 +9,7 @@ namespace PM.Repository.Repository.IRepository
     public interface IProductRepository
     {
         //Crud
-        ICollection<Product> GetProducts();
+        ICollection<Product> GetProducts(string sortBy, string searchString, int? pageNumber);
 
         Product GetProductById(int productId);
         bool ProductExist(string name);
